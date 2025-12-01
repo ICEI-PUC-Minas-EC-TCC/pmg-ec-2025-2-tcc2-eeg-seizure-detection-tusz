@@ -1,0 +1,11 @@
+numpy
+pandas
+pyarrow
+mne
+scipy
+antropy
+nolds
+psutil
+tqdm
+scikit-learn
+joblib
