@@ -66,7 +66,8 @@ eeg-seizure-detection-tusz/
 │   ├── TCC2_Extract_Model.py               # Pipeline de extração de features
 │   └── TCC2_Treinamento_Metodologia.py     # Treinamento e avaliação
 ├── docs/
-│   └── TCC_II_Final.pdf                    # Artigo final (a ser disponibilizado)
+│   ├── TCC_II_Final.pdf                    # Artigo final (a ser disponibilizado)
+│   └── DESCRICAO_VARIAVEIS.md              # Dicionário de dados (variáveis)
 ├── data/                                   # Dados TUSZ (obter separadamente, sob autorização)
 ├── output/                                 # Resultados e modelos
 └── requirements.txt
@@ -74,9 +75,22 @@ eeg-seizure-detection-tusz/
 
 ## Instalação e Uso
 
+
+
+
 ### Requisitos
+- Python: 3.10
+- Sistema operacional testado: Linux (Ubuntu 22.04) e/ou Windows 11
+- Principais dependências: ver `requirements.txt`
+
 ```bash
+python -m venv .venv
+source .venv/bin/activate  # Linux/macOS
+# ou
+.\.venv\Scripts\activate   # Windows
+
 pip install -r requirements.txt
+
 ```
 
 ### Execução
@@ -92,9 +106,8 @@ python src/TCC2_Treinamento_Metodologia.py
 
 ### Acesso aos Dados
 O Temple University Hospital Seizure Corpus (TUSZ) v2.0.3 deve ser obtido mediante solicitação de acesso individual em: 
-https://isip.piconepress.com/projects/tuh_eeg/  
+[https://isip.piconepress.com/projects/tuh_eeg/](https://isip.piconepress.com/projects/tuh_eeg/)  
 _É necessário preencher um formulário de registro e aguardar aprovação para acesso aos dados._
-
 
 Estrutura esperada dos dados:
 ```
@@ -106,8 +119,7 @@ data/tuh_eeg_seizure_v2.0.3/edf/
 
 ## Fluxo de Processamento
 
-Execução síncrona de múltiplos arquivos EDF, com balanceamento automático de recursos, tolerância a falhas individuais, checkpoints de progresso e execução adaptativa ao hardware
-
+Execução síncrona de múltiplos arquivos EDF, com balanceamento automático de recursos, tolerância a falhas individuais, checkpoints de progresso e execução adaptativa ao hardware.
 
 ```python
 # Exemplo do pipeline de agregação por paciente
@@ -126,12 +138,29 @@ def build_subject_proba(model, X, pid_series):
 | KNN | 0.7805 | 0.8205 | 0.9412 | 0.8767 | 0.5252 |
 | SVM | 0.8537 | 0.8500 | 1.0000 | 0.9189 | 0.6429 |
 
+## Dicionário de Dados
+
+Este projeto utiliza um dicionário de dados estruturado para documentar todas as variáveis utilizadas no pipeline. Para consultar a definição completa de todas as variáveis, incluindo tipos, intervalos de valores, fórmulas de cálculo e exemplos práticos, consulte:
+
+[docs/DESCRICAO_VARIAVEIS.md](./docs/DESCRICAO_VARIAVEIS.md)
+
+O dicionário contém as definições de:
+
+- **Metadados dos pacientes**: IDs, idade, sexo, rótulos de convulsão
+- **Características dos sinais EEG**: Número de canais, taxa de amostragem, duração
+- **Variáveis de pré-processamento**: Parâmetros de filtragem, segmentação, normalização
+- **Variáveis de características extraídas**: Espectrais, estatísticas, não-lineares, espaciais e Hjorth
+- **Configurações dos modelos**: Hiperparâmetros de KNN, SVM e Random Forest
+- **Variáveis de saída e resultados**: Predições, probabilidades, métricas de desempenho
+- **Constantes globais**: Bandas de frequência, canais EEG padrão, configurações de sistema
+
 ## Contribuições
 
 - Pipeline completo para detecção de convulsões em cenário inter-paciente
 - Extração de características multiescalares integrando informações temporais, espectrais, não-lineares e espaciais
 - Demonstração da superioridade do SVM em termos de capacidade de generalização
 - Estratégia de agregação por paciente que se mostrou determinante para os resultados
+- Dicionário de dados detalhado facilitando reprodutibilidade e uso por terceiros
 
 ## Trabalhos Futuros
 
@@ -156,3 +185,6 @@ Instituto de Ciências Exatas e Informática
 - **Hernane Velozo Rosa** - Bacharelando em Engenharia de Computação  
 - **Marta Dias Moreira Noronha** (Orientadora) - Doutoranda em Informática
 
+---
+
+[https://github.com/ICEI-PUC-Minas-EC-TCC/pmg-ec-2025-2-tcc2-eeg-seizure-detection-tusz](https://github.com/ICEI-PUC-Minas-EC-TCC/pmg-ec-2025-2-tcc2-eeg-seizure-detection-tusz)
